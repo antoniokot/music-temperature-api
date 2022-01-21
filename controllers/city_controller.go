@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	"github.com/antoniokot/music-temperature-api/models"
 	"github.com/gin-gonic/gin"
 )
 
@@ -38,9 +39,9 @@ func GetCity(con *gin.Context) {
 		fmt.Print(err.Error())
 	}
 
-	var c city
+	var c models.City
 	json.Unmarshal(bodyBytes, &c)
 
-	con.IndentedJSON(http.StatusOK, musicController.GetMusicByTemperature(c.Main.Temp))
+	con.IndentedJSON(http.StatusOK, getMusicByTemperature(c.Main.Temp))
   return
 }

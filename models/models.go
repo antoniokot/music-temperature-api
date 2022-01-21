@@ -1,4 +1,4 @@
-package structs
+package models
 
 type coord struct {
 	Lat float32 `json:"lat"`
@@ -13,14 +13,14 @@ type weather struct {
 }
 
 type main struct {	
-	Temp int16 `json:"temp"`
-	Temp_min int16 `json:"temp_min"`
-	Temp_max int16 `json:"temp_max"`
-	Feels_like int16 `json:"feels_like"`
-	Pressure int16 `json:"pressure"`
-	Humidity int16 `json:"humidity"`
-	Sea_level int16 `json:"sea_level"`
-	Grnd_level int16 `json:"grnd_level"`
+	Temp float32 `json:"temp"`
+	Temp_min float32 `json:"temp_min"`
+	Temp_max float32 `json:"temp_max"`
+	Feels_like float32 `json:"feels_like"`
+	Pressure float32 `json:"pressure"`
+	Humidity float32 `json:"humidity"`
+	Sea_level float32 `json:"sea_level"`
+	Grnd_level float32 `json:"grnd_level"`
 }
 
 type wind struct {
@@ -41,7 +41,7 @@ type sys struct {
 	sunset int32 `json:"sunset"`		
 }
 
-type city struct {
+type City struct {
 	ID int32 `json:"id"`
 	Name string `json:"name"`
 	Cod int32 `json:"cod"`
@@ -64,6 +64,6 @@ type city struct {
 	Coord coord `json:"coord"`
 }
 
-type music struct {
+type Music struct {
 
 }

@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/antoniokot/music-temperature-api/models"
 )
 
-func GetMusicByTemperature(temp float32) music {
+func getMusicByTemperature(temp float32) models.Music {
 	
 	client := &http.Client{}
 
@@ -34,10 +36,10 @@ func GetMusicByTemperature(temp float32) music {
 		fmt.Print(err.Error())
 	}
 
-	var c city
+	var c models.City
 	json.Unmarshal(bodyBytes, &c)
 
-	var m music
+	var m models.Music
 
 	return m
 }
