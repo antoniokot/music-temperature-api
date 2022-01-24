@@ -13,8 +13,8 @@ var Client spotify.Client
 func StartSpotifyConfig() {
 
 	authConfig := &clientcredentials.Config{
-		ClientID:     "08c1a6be652e4fdca07f1815bfd167e4",
-		ClientSecret: "<your_client_secret",
+		ClientID:     "2c3a77eb3039418f86eaf972ebdd09e6",
+		ClientSecret: "b37dd90e0d0741a08cd563a76928ad03",
 		TokenURL:     spotify.TokenURL,
 	}
 	
