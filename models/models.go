@@ -63,7 +63,3 @@ type City struct {
 
 	Coord coord `json:"coord"`
 }
-
-type Music struct {
-
-}

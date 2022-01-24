@@ -43,5 +43,4 @@ func GetCity(con *gin.Context) {
 	json.Unmarshal(bodyBytes, &c)
 
 	con.IndentedJSON(http.StatusOK, getMusicByTemperature(c.Main.Temp))
-  return
 }

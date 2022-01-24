@@ -1,45 +1,43 @@
 package controllers
 
 import (
-	"encoding/json"
-	"fmt"
-	"io/ioutil"
-	"net/http"
+	"math/rand"
+	"time"
 
-	"github.com/antoniokot/music-temperature-api/models"
+	"github.com/zmb3/spotify"
 )
 
-func getMusicByTemperature(temp float32) models.Music {
-	
-	client := &http.Client{}
+func getMusicByTemperature(temp float32) spotify.FullPlaylist {
 
- 	req, err := http.NewRequest("GET", "https://icanhazdadjoke.com/", nil)
+	cTemp := temp - 273.15 // Celsius temperature
+	var playlistID string
 
- 	if err != nil {
-		fmt.Print(err.Error())
+	if cTemp > 30.0 {
+		partyPlaylists := []string {"37i9dQZF1DX8mBRYewE6or", "37i9dQZF1DX4MdXmAY6EDq", "37i9dQZF1DWWmaszSfZpom"}
+
+		rand.Seed(time.Now().UnixNano())
+		playlistID = partyPlaylists[rand.Intn(3)]
+
+	} else if cTemp >= 15 { 
+		popPlaylists := []string {"37i9dQZF1DX6aTaZa0K6VA", "37i9dQZF1DWVLcZxJO5zyf", "0akcrslPTLqkIRt6gfBKUi"}
+
+		rand.Seed(time.Now().UnixNano())
+		playlistID = popPlaylists[rand.Intn(3)]
+
+	} else if cTemp <= 14 && cTemp >= 10 { // Tem um gap entre 15 e 14. 14.01 já não se encaixa nessas especificações
+		rockPlaylists := []string {"37i9dQZF1DWXRqgorJj26U", "37i9dQZF1DX4vCk1GJH7zl", "4CmVkOQJA12pmQwsICaYpC"}
+
+		rand.Seed(time.Now().UnixNano())
+		playlistID = rockPlaylists[rand.Intn(3)]
+
+	} else if cTemp < 9 { // Tem um gap entre 10 e 9. 9.01 já não se encaixa nessas especificações
+		classicPlaylists := []string {"37i9dQZF1DWWEJlAGA9gs0", "37i9dQZF1DWXmUP9DYdke2", "37i9dQZF1DWXzMRSBIsJEP"}
+
+		rand.Seed(time.Now().UnixNano())
+		playlistID = classicPlaylists[rand.Intn(3)]
 	}
 
-	req.Header.Add("Accept", "application/json")
-	req.Header.Add("Content-Type", "application/json")
+	playlist :=	getPlaylistByID(playlistID)
 
-	resp, err := client.Do(req)
-
-	if err != nil {
-		fmt.Print(err.Error())
-	}
-	
-	defer resp.Body.Close()
-
-	bodyBytes, err := ioutil.ReadAll(resp.Body)
-	
-	if err != nil {
-		fmt.Print(err.Error())
-	}
-
-	var c models.City
-	json.Unmarshal(bodyBytes, &c)
-
-	var m models.Music
-
-	return m
+	return playlist
 }
