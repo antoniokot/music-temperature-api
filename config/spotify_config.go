@@ -3,18 +3,26 @@ package config
 import (
 	"context"
 	"log"
+	"os"
 
 	"github.com/zmb3/spotify"
 	"golang.org/x/oauth2/clientcredentials"
+	"github.com/joho/godotenv"
 )
 
 var Client spotify.Client
 
 func StartSpotifyConfig() {
 
+	err := godotenv.Load(".env")
+
+	if err != nil {
+    log.Fatalf("Erro ao carregar arquivo .env")
+  }
+
 	authConfig := &clientcredentials.Config{
-		ClientID:     "2c3a77eb3039418f86eaf972ebdd09e6",
-		ClientSecret: "b37dd90e0d0741a08cd563a76928ad03",
+		ClientID:     os.Getenv("CLIENT_ID"),
+		ClientSecret: os.Getenv("CLIENT_SECRET"),
 		TokenURL:     spotify.TokenURL,
 	}
 	

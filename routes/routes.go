@@ -8,7 +8,7 @@ import (
 func StartRoutes() {
 	router := gin.Default()
 	
-	router.GET("/music/city/:name", controllers.GetCity)
+	router.GET("/playlist/city/:name", controllers.GetCity)
 
 	router.Run("localhost:3333")
 }
