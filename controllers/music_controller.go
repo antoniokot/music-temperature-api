@@ -3,11 +3,13 @@ package controllers
 import (
 	"math/rand"
 	"time"
+	"errors"
 
+	"github.com/antoniokot/music-temperature-api/config"
 	"github.com/zmb3/spotify"
 )
 
-func getMusicByTemperature(temp float32) spotify.FullPlaylist {
+func getPlaylistByTemperature(temp float32) (spotify.FullPlaylist, error) {
 
 	cTemp := temp - 273.15 // Celsius temperature
 	var playlistID string
@@ -37,7 +39,12 @@ func getMusicByTemperature(temp float32) spotify.FullPlaylist {
 		playlistID = classicPlaylists[rand.Intn(3)]
 	}
 
-	playlist :=	getPlaylistByID(playlistID)
+	id := spotify.ID(playlistID)
+	playlist, err := config.Client.GetPlaylist(id)
 
-	return playlist
+	if err != nil {
+		return *playlist, errors.New("erro ao tentar recuperar a playlist")
+	}
+
+	return *playlist, nil
 }

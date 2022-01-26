@@ -2,9 +2,9 @@ package controllers
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
+	"log"
 
 	"github.com/antoniokot/music-temperature-api/models"
 	"github.com/gin-gonic/gin"
@@ -19,7 +19,7 @@ func GetCity(con *gin.Context) {
  	req, err := http.NewRequest("GET", "http://api.openweathermap.org/data/2.5/weather?q=" + name + "&appid=b77e07f479efe92156376a8b07640ced", nil)
 
  	if err != nil {
-		fmt.Print(err.Error())
+		log.Fatal("Erro ao montar requisição")
 	}
 
 	req.Header.Add("Accept", "application/json")
@@ -28,7 +28,7 @@ func GetCity(con *gin.Context) {
 	resp, err := client.Do(req)
 
 	if err != nil {
-		fmt.Print(err.Error())
+		log.Fatal("Erro ao recuperar tempo da cidade")
 	}
 	
 	defer resp.Body.Close()
@@ -36,11 +36,17 @@ func GetCity(con *gin.Context) {
 	bodyBytes, err := ioutil.ReadAll(resp.Body)
 	
 	if err != nil {
-		fmt.Print(err.Error())
+		log.Fatal("Erro ao recuperar resposta do serviço")
 	}
 
 	var c models.City
 	json.Unmarshal(bodyBytes, &c)
 
-	con.IndentedJSON(http.StatusOK, getMusicByTemperature(c.Main.Temp))
+	playlist, err := getPlaylistByTemperature(c.Main.Temp) 
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	con.IndentedJSON(http.StatusOK, playlist)
 }
