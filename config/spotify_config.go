@@ -5,9 +5,9 @@ import (
 	"log"
 	"os"
 
+	"github.com/joho/godotenv"
 	"github.com/zmb3/spotify"
 	"golang.org/x/oauth2/clientcredentials"
-	"github.com/joho/godotenv"
 )
 
 var Client spotify.Client
@@ -17,7 +17,7 @@ func StartSpotifyConfig() {
 	err := godotenv.Load(".env")
 
 	if err != nil {
-    log.Fatalf("Erro ao carregar arquivo .env")
+    log.Fatalf(err.Error())
   }
 
 	authConfig := &clientcredentials.Config{

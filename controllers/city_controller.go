@@ -2,11 +2,12 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
-	"log"
 
 	"github.com/antoniokot/music-temperature-api/models"
+	"github.com/darahayes/go-boom"
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,7 +20,8 @@ func GetCity(con *gin.Context) {
  	req, err := http.NewRequest("GET", "http://api.openweathermap.org/data/2.5/weather?q=" + name + "&appid=b77e07f479efe92156376a8b07640ced", nil)
 
  	if err != nil {
-		log.Fatal("Erro ao montar requisição")
+		boom.Internal(con.Writer, "Erro ao montar requisição")
+		return
 	}
 
 	req.Header.Add("Accept", "application/json")
@@ -27,8 +29,9 @@ func GetCity(con *gin.Context) {
 
 	resp, err := client.Do(req)
 
-	if err != nil {
-		log.Fatal("Erro ao recuperar tempo da cidade")
+	if resp.StatusCode != 200 || err != nil {
+		boom.NotFound(con.Writer, "Erro ao recuperar cidade. O nome da cidade "+name+" está certo?")
+		return
 	}
 	
 	defer resp.Body.Close()
@@ -36,16 +39,20 @@ func GetCity(con *gin.Context) {
 	bodyBytes, err := ioutil.ReadAll(resp.Body)
 	
 	if err != nil {
-		log.Fatal("Erro ao recuperar resposta do serviço")
+		boom.Internal(con.Writer, "Erro ao recuperar resposta do serviço")
+		return
 	}
 
 	var c models.City
 	json.Unmarshal(bodyBytes, &c)
 
+	fmt.Println(c)
+
 	playlist, err := getPlaylistByTemperature(c.Main.Temp) 
 
 	if err != nil {
-		log.Fatal(err)
+		boom.Internal(con.Writer, err)
+		return
 	}
 
 	con.IndentedJSON(http.StatusOK, playlist)
