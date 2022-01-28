@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 
@@ -45,8 +44,6 @@ func GetCity(con *gin.Context) {
 
 	var c models.City
 	json.Unmarshal(bodyBytes, &c)
-
-	fmt.Println(c)
 
 	playlist, err := getPlaylistByTemperature(c.Main.Temp) 
 
