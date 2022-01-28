@@ -5,20 +5,13 @@ import (
 	"log"
 	"os"
 
-	"github.com/joho/godotenv"
 	"github.com/zmb3/spotify"
 	"golang.org/x/oauth2/clientcredentials"
 )
 
-var Client spotify.Client
+var SpotifyClient spotify.Client
 
 func StartSpotifyConfig() {
-
-	err := godotenv.Load(".env")
-
-	if err != nil {
-    log.Fatalf(err.Error())
-  }
 
 	authConfig := &clientcredentials.Config{
 		ClientID:     os.Getenv("CLIENT_ID"),
@@ -31,5 +24,5 @@ func StartSpotifyConfig() {
 		log.Fatalf("Erro ao tentar recuperar token de acesso: %v", err)
 	}
 
-	Client = spotify.Authenticator{}.NewClient(accessToken)
+	SpotifyClient = spotify.Authenticator{}.NewClient(accessToken)
 }

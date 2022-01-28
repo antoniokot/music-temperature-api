@@ -14,6 +14,8 @@ func GetCity(con *gin.Context) {
 
 	name := con.Param("name")
 
+	
+
 	client := &http.Client{}
 
  	req, err := http.NewRequest("GET", "http://api.openweathermap.org/data/2.5/weather?q=" + name + "&appid=b77e07f479efe92156376a8b07640ced", nil)

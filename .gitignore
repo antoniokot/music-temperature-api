@@ -1,6 +1,2 @@
 .env
-./controllers/playlist_controller_test.go
 ./controllers/.env
-Dockerfile
-client.key
-client.cert

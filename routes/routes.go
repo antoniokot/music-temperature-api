@@ -10,5 +10,5 @@ func StartRoutes() {
 	
 	router.GET("/playlist/city/:name", controllers.GetCity)
 
-	router.Run("localhost:3333")
+	router.Run(":3333")
 }

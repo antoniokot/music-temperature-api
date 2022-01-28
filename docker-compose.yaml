@@ -1,0 +1,27 @@
+version: "3.6"
+
+services: 
+  app: 
+    ports: 
+      - 3333:3333
+    build: .
+    container_name: music-temperature-api
+    environment: 
+      GIN_MODE: "release"
+      CLIENT_ID: "2c3a77eb3039418f86eaf972ebdd09e6"
+      CLIENT_SECRET: "b37dd90e0d0741a08cd563a76928ad03"
+    networks: 
+      - app_public
+
+  redis:
+    image: redis:latest
+    volumes: 
+      - ./resources/redis:/var/lib/redis
+    ports: 
+      - 6379:6379
+    networks: 
+      - app_public
+
+networks: 
+  app_public: 
+    name: app_public
