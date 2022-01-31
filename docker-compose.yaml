@@ -14,9 +14,10 @@ services:
       - app_public
 
   redis:
-    image: redis:latest
+    image: redis
     volumes: 
       - ./resources/redis:/var/lib/redis
+    container_name: redis
     ports: 
       - 6379:6379
     networks: 

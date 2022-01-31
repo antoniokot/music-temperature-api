@@ -10,4 +10,6 @@ FROM gcr.io/distroless/base
 
 COPY --from=builder /go/app/music-temperature-api .
 
+HEALTHCHECK CMD curl --fail http://localhost:3333 || exit 1 
+
 CMD ["/music-temperature-api"]
