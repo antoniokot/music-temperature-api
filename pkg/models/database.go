@@ -1,5 +1,11 @@
 package models
 
+import (
+	"strconv"
+
+	"github.com/antoniokot/music-temperature-api/config"
+)
+
 type coord struct {
 	Lat float32 `json:"lat"`
 	Lon float32 `json:"lon"`
@@ -62,4 +68,28 @@ type City struct {
 	Weather []weather `json:"weather"`
 
 	Coord coord `json:"coord"`
+}
+
+func GetTemperatureFromRedis(name string) (float32, error) {
+
+	val, err := config.RedisClient.Get(name).Result()
+
+	if err != nil {
+		return -1, err
+	}
+
+	fVal, err := strconv.ParseFloat(val, 32)
+
+	if err != nil {
+		return -1, err
+	}
+
+	return float32(fVal), nil
+}
+
+func StoreTemperatureInRedis(key string, val float32) error {
+
+	err := config.RedisClient.Set(key, val, 300000000000).Err()
+
+	return err
 }

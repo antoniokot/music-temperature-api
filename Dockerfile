@@ -4,7 +4,7 @@ WORKDIR /go/app
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -v -o music-temperature-api ./main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -v -o music-temperature-api ./cmd/web/main.go
 
 FROM gcr.io/distroless/base
 

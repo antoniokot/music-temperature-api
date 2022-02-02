@@ -1,2 +1,2 @@
 .env
-./controllers/.env
+./tests/.env

@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/antoniokot/music-temperature-api/config"
-	"github.com/antoniokot/music-temperature-api/routes"
+	"github.com/antoniokot/music-temperature-api/internal/api"
 )
 
 func main() {
@@ -12,5 +12,5 @@ func main() {
 
 	config.StartRedisConfig()
 	config.StartSpotifyConfig()
-	routes.StartRoutes()
+	api.StartRoutes()
 }
