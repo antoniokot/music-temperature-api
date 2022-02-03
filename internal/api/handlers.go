@@ -8,6 +8,7 @@ import (
 )
 
 func playlistRecomendation(c *gin.Context) {
+	
 	name := c.Param("name")
 
 	temp, err := weather.GetWeatherByCityName(name, c)
@@ -29,5 +30,6 @@ func playlistRecomendation(c *gin.Context) {
 		"name":        playlist.Name,
 		"owner":			 playlist.Owner.DisplayName,
 		"description": playlist.Description,
+		"tracks": 		 playlist.Tracks.Total,
 	})
 }
