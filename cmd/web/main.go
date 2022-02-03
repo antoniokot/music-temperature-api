@@ -8,6 +8,7 @@ import (
 )
 
 func main() {
+	
 	fmt.Println("Subindo servidor em http://localhost:3333")
 
 	config.StartRedisConfig()
