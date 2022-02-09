@@ -11,7 +11,7 @@ func main() {
 	
 	fmt.Println("Subindo servidor em http://localhost:3333")
 
-	config.StartRedisConfig()
+	// config.StartRedisConfig()
 	config.StartSpotifyConfig()
 	api.StartRoutes()
 }

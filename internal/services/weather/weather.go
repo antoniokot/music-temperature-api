@@ -13,9 +13,9 @@ import (
 
 func GetWeatherByCityName(name string, con *gin.Context) (float32, error) {
 
-	temp, err := models.GetTemperatureFromRedis(name)
+	// temp, err := models.GetTemperatureFromRedis(name)
 
-	if err != nil || temp == -1 {
+	// if err != nil || temp == -1 {
 
 		client := &http.Client{}
 
@@ -45,14 +45,16 @@ func GetWeatherByCityName(name string, con *gin.Context) (float32, error) {
 		var c models.City
 		json.Unmarshal(bodyBytes, &c)
 
-		temp = c.Main.Temp
+		temp := c.Main.Temp
 
-		err = models.StoreTemperatureInRedis(name, temp)
+		// temp = c.Main.Temp
+
+		// err = models.StoreTemperatureInRedis(name, temp)
 
 		if err != nil {
 			return -1, errors.New("Erro ao armazenar dados em cache")
 		}
-	}
+	// }
 
 	return float32(math.Round(float64(temp - 273.15) * 100) / 100), nil
 }
